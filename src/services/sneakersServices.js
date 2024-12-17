@@ -13,4 +13,13 @@ const nikeList = async () => {
 	}
 };
 
-export { nikeList };
+const sneakerDetails = async (sneakerID) => {
+	try {
+		const res = await fetch(`${SNEAKERS_URL + "/" + sneakerID}`, options);
+		return res.json();
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export { nikeList, sneakerDetails };
