@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import * as citiServices from "./services/citiServices";
 import * as sneakersServices from "./services/sneakersServices";
-
+import Navbar from "./components/navbar";
+import ProductList from "./components/ProductList";
 function App() {
 	const [balancePoints, setBalancePoints] = useState(0);
 	const [nikeSneakers, setNikeSneakers] = useState([]);
@@ -34,20 +35,12 @@ function App() {
 
 	return (
 		<>
-			<h1>
-				My CITI Balance Points <br />
-				{balancePoints}
-			</h1>
-
 			<div>
-				<div>
-					{nikeSneakers.map((sneaker) => (
-						<div>
-							<img src={sneaker.image} alt={sneaker.title} />
-							<p>{sneaker.title}</p>
-							<p>Price: {sneaker.avg_price.toFixed(2)}</p>
-						</div>
-					))}
+				<Navbar balancePoints={balancePoints}/>
+
+				<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+				
+					<ProductList products={nikeSneakers} />
 				</div>
 			</div>
 		</>
