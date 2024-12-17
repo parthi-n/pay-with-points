@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import * as citiServices from "./services/citiServices";
 import * as sneakersServices from "./services/sneakersServices";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 function App() {
 	const [balancePoints, setBalancePoints] = useState(0);
