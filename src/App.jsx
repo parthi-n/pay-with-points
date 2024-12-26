@@ -6,10 +6,12 @@ import * as sneakersServices from "./services/sneakersServices";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
+import Cart from "./components/cart";
 
 function App() {
 	const [balancePoints, setBalancePoints] = useState(0);
 	const [nikeSneakers, setNikeSneakers] = useState([]);
+	const [cartItems, setCartItems] = useState([]);
 
 	useEffect(() => {
 		const fetchPointBalance = async () => {
@@ -36,6 +38,40 @@ function App() {
 		fetchNikeSneakers();
 	}, []);
 
+	const handleAddToCart = (product) => {
+		const checkItem = cartItems.filter((item) => item.id === product.id);
+
+		if (!checkItem || cartItems.length === 0) {
+			const newItem = { ...product, quantity: 1 };
+			console.log(newItem.quantity);
+			setCartItems([...cartItems, newItem]);
+		} else {
+			const remainingItems = cartItems.filter((el) => el.id !== product.id);
+			const currentQty = checkItem[0]?.quantity || 0;
+			const newQty = currentQty + 1;
+			const updateItem = { ...product, quantity: newQty };
+			setCartItems([...remainingItems, updateItem]);
+		}
+	};
+
+	const handleAddQuantity = (product) => {
+		const checkItem = cartItems.filter((item) => item.id === product.id);
+		const remainingItems = cartItems.filter((el) => el.id !== product.id);
+		const currentQty = checkItem[0]?.quantity || 0;
+		const newQty = currentQty + 1;
+		const updateItem = { ...product, quantity: newQty };
+		setCartItems([...remainingItems, updateItem]);
+	};
+
+	const handleRemoveQuantity = (product) => {
+		const checkItem = cartItems.filter((item) => item.id === product.id);
+		const remainingItems = cartItems.filter((el) => el.id !== product.id);
+		const currentQty = checkItem[0]?.quantity || 0;
+		const newQty = currentQty - 1;
+		const updateItem = { ...product, quantity: newQty };
+		setCartItems([...remainingItems, updateItem]);
+	};
+
 	return (
 		<>
 			<Navbar balancePoints={balancePoints} />
@@ -44,7 +80,7 @@ function App() {
 					path="/"
 					element={
 						<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-							<ProductList products={nikeSneakers} />
+							<ProductList products={nikeSneakers} handleAddToCart={handleAddToCart} />
 						</div>
 					}
 				/>
@@ -52,7 +88,7 @@ function App() {
 					path="/cart"
 					element={
 						<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-							<h2>Cart Page</h2>
+							<Cart cartItems={cartItems} handleAddQuantity={handleAddQuantity} handleRemoveQuantity={handleRemoveQuantity} />
 						</div>
 					}
 				/>
@@ -72,6 +108,7 @@ function App() {
 						</div>
 					}
 				/>
+				<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 			</Routes>
 		</>
 	);

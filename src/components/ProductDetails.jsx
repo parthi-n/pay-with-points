@@ -38,11 +38,13 @@ export default function ProductDetails({ sneaker }) {
 							<span aria-hidden="true" className="absolute inset-0" />
 							{sneakerDetails.title}
 						</h3>
-						<p className="mt-1 text-sm text-gray-500">{sneakerDetails.color}</p>
+						<p className="mt-1 text-sm text-gray-500">{sneakerDetails.gender}</p>
 						<p className="text-sm font-medium text-gray-900">S$ {sneakerDetails.avg_price}</p>
 					</div>
 				</div>
 			</div>
+
+			
 		</div>
 	);
 }
