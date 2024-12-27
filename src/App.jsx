@@ -6,7 +6,7 @@ import * as sneakersServices from "./services/sneakersServices";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
-import Cart from "./components/cart";
+import Cart from "./components/Cart";
 
 function App() {
 	const [balancePoints, setBalancePoints] = useState(0);
