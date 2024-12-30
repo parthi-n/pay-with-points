@@ -54,62 +54,58 @@ function App() {
 		}
 	};
 
-	const handleAddQuantity = (product) => {
-		const checkItem = cartItems.filter((item) => item.id === product.id);
-		const remainingItems = cartItems.filter((el) => el.id !== product.id);
-		const currentQty = checkItem[0]?.quantity || 0;
-		const newQty = currentQty + 1;
-		const updateItem = { ...product, quantity: newQty };
-		setCartItems([...remainingItems, updateItem]);
+	const handleAddQuantity = (productId) => {
+		const productIndex = cartItems.findIndex((item) => item.id === productId);
+		const newCartArray = [...cartItems];
+		const currentQty = newCartArray[productIndex]?.quantity || 0;
+		newCartArray[productIndex].quantity = currentQty + 1;
+		setCartItems([...newCartArray]);
 	};
 
-	const handleRemoveQuantity = (product) => {
-		const checkItem = cartItems.filter((item) => item.id === product.id);
-		const remainingItems = cartItems.filter((el) => el.id !== product.id);
-		const currentQty = checkItem[0]?.quantity || 0;
+	const handleRemoveQuantity = (productId) => {
+		const productIndex = cartItems.findIndex((item) => item.id === productId);
+		const newCartArray = [...cartItems];
+		const currentQty = newCartArray[productIndex]?.quantity || 0;
 		const newQty = currentQty - 1;
-		const updateItem = { ...product, quantity: newQty };
-		setCartItems([...remainingItems, updateItem]);
+
+		if (currentQty > 0) {
+			if (newQty > 0) {
+				newCartArray[productIndex].quantity = newQty;
+				setCartItems([...newCartArray]);
+			} else {
+				const updatedCart = newCartArray.filter((item) => item.id !== productId);
+				setCartItems(updatedCart);
+			}
+		}
+	};
+
+	const handleRemoveItem = (productId) => {
+		const updatedCart = cartItems.filter((item) => item.id !== productId);
+		setCartItems([...updatedCart]);
 	};
 
 	return (
 		<>
-			<Navbar balancePoints={balancePoints} />
-			<Routes>
-				<Route
-					path="/"
-					element={
-						<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-							<ProductList products={nikeSneakers} handleAddToCart={handleAddToCart} />
-						</div>
-					}
-				/>
-				<Route
-					path="/cart"
-					element={
-						<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-							<Cart cartItems={cartItems} handleAddQuantity={handleAddQuantity} handleRemoveQuantity={handleRemoveQuantity} />
-						</div>
-					}
-				/>
-				<Route
-					path="/sneakers"
-					element={
-						<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-							<ProductList products={nikeSneakers} />
-						</div>
-					}
-				/>
-				<Route
-					path="/sneakers/:sneakerSlug"
-					element={
-						<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-							<ProductDetails />
-						</div>
-					}
-				/>
-				<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
-			</Routes>
+			<Navbar balancePoints={balancePoints} totalItems={cartItems.length} />
+			<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+				<Routes>
+					<Route path="/" element={<ProductList products={nikeSneakers} handleAddToCart={handleAddToCart} />} />
+					<Route
+						path="/cart"
+						element={
+							<Cart
+								cartItems={cartItems}
+								handleAddQuantity={handleAddQuantity}
+								handleRemoveQuantity={handleRemoveQuantity}
+								handleRemoveItem={handleRemoveItem}
+							/>
+						}
+					/>
+					<Route path="/sneakers" element={<ProductList products={nikeSneakers} />} />
+					<Route path="/sneakers/:sneakerSlug" element={<ProductDetails handleAddToCart={handleAddToCart} />} />
+					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
+				</Routes>
+			</div>
 		</>
 	);
 }
