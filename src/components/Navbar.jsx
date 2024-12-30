@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/nike-white.svg"
 
 export default function Navbar({ balancePoints, totalItems }) {
 	return (
@@ -8,7 +9,7 @@ export default function Navbar({ balancePoints, totalItems }) {
 				<div className="flex lg:flex-1 gap-6">
 					<Link to="/" className="-m-1.5 p-1.5">
 						<span className="sr-only">Your Company</span>
-						<img alt="" src="src/assets/nike-white.svg" className="h-8 w-auto" />
+						<img alt="" src={logo} className="h-8 w-auto" />
 					</Link>
 				</div>
 				<div className="hidden lg:flex lg:gap-x-12">
