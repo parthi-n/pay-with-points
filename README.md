@@ -11,3 +11,5 @@ Currently, two official plugins are available:
 - Tailwind CSS & Components 
 -https://readymadeui.com/tailwind/
 -
+
+https://icons8.com/preloaders/en/search/loading

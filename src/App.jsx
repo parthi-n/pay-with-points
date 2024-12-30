@@ -4,12 +4,13 @@ import "./App.css";
 import * as citiServices from "./services/citiServices";
 import * as sneakersServices from "./services/sneakersServices";
 import Navbar from "./components/Navbar";
-import ProductList from "./components/ProductList";
-import ProductDetails from "./components/ProductDetails";
-import Cart from "./components/Cart";
+import ProductList from "./pages/ProductList";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 function App() {
-	const [balancePoints, setBalancePoints] = useState(0);
+	const [availablePoints, setAvailablePoints] = useState(0);
 	const [nikeSneakers, setNikeSneakers] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
 
@@ -18,7 +19,7 @@ function App() {
 			try {
 				const citiPointBalance = await citiServices.citiPointBalance();
 				//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
-				setBalancePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
+				setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
 			} catch (error) {
 				console.log(error);
 			}
@@ -86,7 +87,7 @@ function App() {
 
 	return (
 		<>
-			<Navbar balancePoints={balancePoints} totalItems={cartItems.length} />
+			<Navbar availablePoints={availablePoints} totalItems={cartItems.length} />
 			<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 				<Routes>
 					<Route path="/" element={<ProductList nikeSneakers={nikeSneakers} setNikeSneakers={setNikeSneakers} handleAddToCart={handleAddToCart} />} />
@@ -98,11 +99,13 @@ function App() {
 								handleAddQuantity={handleAddQuantity}
 								handleRemoveQuantity={handleRemoveQuantity}
 								handleRemoveItem={handleRemoveItem}
+								availablePoints={availablePoints}
 							/>
 						}
 					/>
 					<Route path="/sneakers" element={<ProductList products={nikeSneakers} />} />
 					<Route path="/sneakers/:sneakerSlug" element={<ProductDetails handleAddToCart={handleAddToCart} />} />
+					<Route path="/checkout" element={<Checkout />} />
 					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 				</Routes>
 			</div>

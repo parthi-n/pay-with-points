@@ -23,4 +23,6 @@ const sneakerDetails = async (sneakerID) => {
 	}
 };
 
+
+
 export { nikeList, sneakerDetails };

@@ -2,6 +2,7 @@ const CITI_POINTBALANCE_URL = `${import.meta.env.VITE_CITI_POINTBALANCE_URL}`;
 const CITI_POINTBALANCE_ACCESS_TOKEN = `${import.meta.env.VITE_CITI_POINTBALANCE_ACCESS_TOKEN}`;
 const CITI_CLIENT_ID = `${import.meta.env.VITE_CITI_CLIENT_ID}`;
 const CITI_CARD_ID = `${import.meta.env.VITE_CITI_CARD_ID}`;
+const conversionRate = 25;
 
 const cardDetails = {
 	cardDetails: [
@@ -31,4 +32,8 @@ const citiPointBalance = async () => {
 	}
 };
 
-export { citiPointBalance };
+const convertToPoints = (price) => {
+	return price * conversionRate;
+};
+
+export { citiPointBalance, convertToPoints };

@@ -1,10 +1,9 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as sneakersServices from "../services/sneakersServices";
-import ProductCard from "./ProductCard";
-import Preloader from "../assets/loader.gif"
-
+import ProductCard from "../components/ProductCard";
+import Loader from "../components/Loader";
 
 export default function ProductList({ nikeSneakers, setNikeSneakers, handleAddToCart }) {
 	const [pageNum, setPageNum] = useState(2);
@@ -25,20 +24,9 @@ export default function ProductList({ nikeSneakers, setNikeSneakers, handleAddTo
 		fetchMoreSneakers();
 	};
 
-	const loader = (
-		<div className="mx-auto my-20 text-center flex justify-center" >
-			<img alt="" src={Preloader} className="h-5 w-14" />
-		</div>
-	);
 	return (
 		<div className="bg-white relative">
-			{/* <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10">
-				{products.map((sneaker) => (
-					<ProductCard key={sneaker.id} sneaker={sneaker} />
-				))}
-			</div> */}
-
-			<InfiniteScroll dataLength={nikeSneakers.length} next={fetchMoreData} hasMore={true} loader={loader}>
+			<InfiniteScroll dataLength={nikeSneakers.length} next={fetchMoreData} hasMore={true} loader={<Loader />}>
 				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10">
 					{nikeSneakers.map((sneaker) => (
 						<ProductCard key={sneaker.id} sneaker={sneaker} />
