@@ -26,7 +26,7 @@ function App() {
 
 		const fetchNikeSneakers = async () => {
 			try {
-				const nikeSneakerData = await sneakersServices.nikeList();
+				const nikeSneakerData = await sneakersServices.nikeList(1);
 				console.log(nikeSneakerData);
 				setNikeSneakers(nikeSneakerData.data);
 			} catch (err) {
@@ -89,7 +89,7 @@ function App() {
 			<Navbar balancePoints={balancePoints} totalItems={cartItems.length} />
 			<div className="mx-auto z-0 max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 				<Routes>
-					<Route path="/" element={<ProductList products={nikeSneakers} handleAddToCart={handleAddToCart} />} />
+					<Route path="/" element={<ProductList nikeSneakers={nikeSneakers} setNikeSneakers={setNikeSneakers} handleAddToCart={handleAddToCart} />} />
 					<Route
 						path="/cart"
 						element={

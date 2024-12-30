@@ -22,7 +22,7 @@ export default function Navbar({ balancePoints, totalItems }) {
 						)}
 					</div>
 
-					<div>Available CITI Points {balancePoints}</div>
+					<div>CITI Points: {balancePoints}</div>
 				</div>
 			</nav>
 		</header>
