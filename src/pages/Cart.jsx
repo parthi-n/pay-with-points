@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import CartItem from "../components/CartItem";
 import OrderSummary from "../components/OrderSummary";
 
-export default function cart({ cartItems, handleAddQuantity, handleRemoveQuantity, handleRemoveItem, availablePoints }) {
-	const totalPoints = cartItems.reduce((acc, obj) => acc + obj.sneakerPoints * obj.quantity, 0);
+export default function cart({ cartItems, totalPricePts,  handleAddQuantity, handleRemoveQuantity, handleRemoveItem, availablePoints }) {
+
 
 	return (
 		<div class="font-sans  mx-auto bg-white py-4">
@@ -15,7 +15,7 @@ export default function cart({ cartItems, handleAddQuantity, handleRemoveQuantit
 					{cartItems.length > 0 ? (
 						cartItems.map((item) => (
 							<CartItem
-								key={item.id}
+								key={item.id + item.size}
 								item={item}
 								handleAddQuantity={handleAddQuantity}
 								handleRemoveQuantity={handleRemoveQuantity}
@@ -28,7 +28,7 @@ export default function cart({ cartItems, handleAddQuantity, handleRemoveQuantit
 					<hr class="border-gray-300" />
 				</div>
 
-				<OrderSummary availablePoints={availablePoints} totalPoints={totalPoints} />
+				<OrderSummary availablePoints={availablePoints} totalPricePts={totalPricePts} />
 			</div>
 		</div>
 	);

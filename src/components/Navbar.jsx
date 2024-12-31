@@ -16,15 +16,15 @@ export default function Navbar({ availablePoints, totalItems }) {
 					<div className="relative">
 						<Link to="/cart">Cart</Link>
 						{totalItems > 0 && (
-							<span class="bg-red-500 text-[10px] px-1.5 font-semibold min-w-[16px] h-4 flex items-center justify-center text-white rounded-full absolute -top-1 left-[110%]">
+							<span class="bg-blue-500 text-[10px] px-1.5 font-semibold min-w-[16px] h-4 flex items-center justify-center text-white rounded-full absolute -top-1 left-[110%]">
 								{totalItems}
 							</span>
 						)}
 					</div>
 
-					<div className="rounded-full border border-blue-500 bg-blue-600/10 text-blue-800 font-medium px-4 py-1 flex gap-1 items-center align-baseline">
-						<span className="text-xs font-semibold"> CITI POINTS:</span>
-						<span className="">{availablePoints}</span>
+					<div className="rounded-full border border-blue-500 bg-blue-600/10 text-blue-800 font-medium px-3 py-0.5 flex gap-1 items-center align-baseline">
+						<span className="text-xs font-semibold"> CITI PTS:</span>
+						<span className="font-semibold">{availablePoints}</span>
 					</div>
 				</div>
 			</nav>

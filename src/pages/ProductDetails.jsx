@@ -45,6 +45,7 @@ export default function ProductDetails({ handleAddToCart }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		
 		handleAddToCart(selectedItem);
 	};
 
@@ -105,13 +106,13 @@ export default function ProductDetails({ handleAddToCart }) {
 								<div className="mt-6 space-y-4">
 									<button
 										type="button"
-										className="w-full px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded-full"
+										className="w-full px-4 py-3 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded-full"
 									>
 										Favourite
 									</button>
 									<button
 										type="submit"
-										className="w-full px-4 py-2.5 border border-gray-800 bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold rounded-full"
+										className="w-full px-4 py-3 border border-gray-800 bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold rounded-full"
 									>
 										Add to cart
 									</button>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function OrderSummary({ totalPoints, availablePoints }) {
+export default function OrderSummary({ availablePoints, totalPricePts }) {
 	return (
 		<div class="bg-gray-100 rounded-md p-4 h-max">
 			<h3 class="text-lg max-sm:text-base font-bold text-gray-800 border-b border-gray-300 pb-2">Order Summary</h3>
@@ -12,15 +12,15 @@ export default function OrderSummary({ totalPoints, availablePoints }) {
 				</li>
 
 				<li class="flex flex-wrap gap-4 text-sm">
-					Subtotal <span class="ml-auto font-bold">{totalPoints} pts</span>
+					Subtotal <span class="ml-auto font-bold">{totalPricePts} pts</span>
 				</li>
 
 				<hr class="border-gray-300" />
 				<li class="flex flex-wrap gap-4 text-sm font-bold">
-					Total <span class="ml-auto">{totalPoints} pts</span>
+					Total <span class="ml-auto">{totalPricePts} pts</span>
 				</li>
 				<li class="flex flex-wrap gap-4 text-sm">
-					Remaining Points <span class="ml-auto font-bold">{availablePoints - totalPoints} pts</span>
+					Remaining Points <span class="ml-auto font-bold">{availablePoints - totalPricePts} pts</span>
 				</li>
 			</ul>
 

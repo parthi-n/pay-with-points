@@ -40,31 +40,33 @@ function App() {
 	}, []);
 
 	const handleAddToCart = (product) => {
-		const checkItem = cartItems.filter((item) => item.id === product.id);
+		const checkItem = cartItems.find((item) => item.id === product.id && item.size === product.size);
 
-		if (!checkItem || cartItems.length === 0) {
+		if (!checkItem) {
 			const newItem = { ...product, quantity: 1 };
-			console.log(newItem.quantity);
+			//console.log(newItem.quantity);
 			setCartItems([...cartItems, newItem]);
 		} else {
-			const remainingItems = cartItems.filter((el) => el.id !== product.id);
-			const currentQty = checkItem[0]?.quantity || 0;
-			const newQty = currentQty + 1;
-			const updateItem = { ...product, quantity: newQty };
-			setCartItems([...remainingItems, updateItem]);
+			const updatedCartItems = cartItems.map((item) => {
+				if (item.id === product.id && item.size === product.size) {
+					return { ...item, quantity: item.quantity + 1 };
+				}
+				return item;
+			});
+			setCartItems(updatedCartItems);
 		}
 	};
 
-	const handleAddQuantity = (productId) => {
-		const productIndex = cartItems.findIndex((item) => item.id === productId);
-		const newCartArray = [...cartItems];
-		const currentQty = newCartArray[productIndex]?.quantity || 0;
-		newCartArray[productIndex].quantity = currentQty + 1;
-		setCartItems([...newCartArray]);
+	const handleAddQuantity = (productId, productSize) => {
+		const productIndex = cartItems.findIndex((item) => item.id === productId && item.size === productSize);
+		const updatedCartItems = [...cartItems];
+		const currentQty = updatedCartItems[productIndex]?.quantity || 0;
+		updatedCartItems[productIndex].quantity = currentQty + 1;
+		setCartItems(updatedCartItems);
 	};
 
-	const handleRemoveQuantity = (productId) => {
-		const productIndex = cartItems.findIndex((item) => item.id === productId);
+	const handleRemoveQuantity = (productId, productSize) => {
+		const productIndex = cartItems.findIndex((item) => item.id === productId && item.size === productSize);
 		const newCartArray = [...cartItems];
 		const currentQty = newCartArray[productIndex]?.quantity || 0;
 		const newQty = currentQty - 1;
@@ -74,16 +76,20 @@ function App() {
 				newCartArray[productIndex].quantity = newQty;
 				setCartItems([...newCartArray]);
 			} else {
-				const updatedCart = newCartArray.filter((item) => item.id !== productId);
+				const updatedCart = newCartArray.filter((item) => item !== cartItems[productIndex]);
 				setCartItems(updatedCart);
 			}
 		}
 	};
 
-	const handleRemoveItem = (productId) => {
-		const updatedCart = cartItems.filter((item) => item.id !== productId);
+	const handleRemoveItem = (productId, productSize) => {
+		const productIndex = cartItems.findIndex((item) => item.id === productId && item.size === productSize);
+
+		const updatedCart = cartItems.filter((item) => item !== cartItems[productIndex]);
 		setCartItems([...updatedCart]);
 	};
+
+	const totalPricePts = cartItems.reduce((acc, obj) => acc + obj.sneakerPoints * obj.quantity, 0);
 
 	return (
 		<>
@@ -100,12 +106,13 @@ function App() {
 								handleRemoveQuantity={handleRemoveQuantity}
 								handleRemoveItem={handleRemoveItem}
 								availablePoints={availablePoints}
+								totalPricePts={totalPricePts}
 							/>
 						}
 					/>
 					<Route path="/sneakers" element={<ProductList products={nikeSneakers} />} />
 					<Route path="/sneakers/:sneakerSlug" element={<ProductDetails handleAddToCart={handleAddToCart} />} />
-					<Route path="/checkout" element={<Checkout />} />
+					<Route path="/checkout" element={<Checkout cartItems={cartItems} totalPricePts={totalPricePts} />} />
 					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 				</Routes>
 			</div>
