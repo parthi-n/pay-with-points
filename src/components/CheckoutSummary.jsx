@@ -5,7 +5,7 @@ export default function CheckoutSummary({ cartItems, totalPricePts }) {
 	console.log(cartItems);
 	return (
 		<div>
-			<h2 class="text-xl font-bold text-gray-800 ">Summary</h2>
+			<h2 class="text-xl font-bold text-gray-800 ">Order Summary</h2>
 			<div className="flex flex-col gap-4 mt-8">
 				{cartItems.map((item) => (
 					<div key={item.id} class="grid grid-cols-3 items-start gap-4  border-gray-100 border-2 p-3 rounded-lg">

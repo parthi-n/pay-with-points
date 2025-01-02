@@ -112,7 +112,7 @@ function App() {
 					/>
 					<Route path="/sneakers" element={<ProductList products={nikeSneakers} />} />
 					<Route path="/sneakers/:sneakerSlug" element={<ProductDetails handleAddToCart={handleAddToCart} />} />
-					<Route path="/checkout" element={<Checkout cartItems={cartItems} totalPricePts={totalPricePts} />} />
+					<Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} totalPricePts={totalPricePts} />} />
 					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 				</Routes>
 			</div>
