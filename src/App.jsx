@@ -14,32 +14,30 @@ function App() {
 	const [nikeSneakers, setNikeSneakers] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
 
+	const fetchPointBalance = async () => {
+		try {
+			const citiPointBalance = await citiServices.citiPointBalance();
+			//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
+			setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const fetchNikeSneakers = async () => {
+		try {
+			const nikeSneakerData = await sneakersServices.nikeList(1);
+			console.log(nikeSneakerData);
+			setNikeSneakers(nikeSneakerData.data);
+		} catch (err) {
+			console.log(error);
+		}
+	};
 
 	useEffect(() => {
-		const fetchPointBalance = async () => {
-			try {
-				const citiPointBalance = await citiServices.citiPointBalance();
-				//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
-				setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		const fetchNikeSneakers = async () => {
-			try {
-				const nikeSneakerData = await sneakersServices.nikeList(1);
-				console.log(nikeSneakerData);
-				setNikeSneakers(nikeSneakerData.data);
-			} catch (err) {
-				console.log(error);
-			}
-		};
-
 		fetchPointBalance();
 		fetchNikeSneakers();
 	}, []);
-
 
 	const handleAddToCart = (product) => {
 		const checkItem = cartItems.find((item) => item.id === product.id && item.size === product.size);
@@ -113,7 +111,18 @@ function App() {
 					/>
 					<Route path="/sneakers" element={<ProductList products={nikeSneakers} />} />
 					<Route path="/sneakers/:sneakerSlug" element={<ProductDetails handleAddToCart={handleAddToCart} />} />
-					<Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} totalPricePts={totalPricePts} />} />
+					<Route
+						path="/checkout"
+						element={
+							<Checkout
+								cartItems={cartItems}
+								setCartItems={setCartItems}
+								totalPricePts={totalPricePts}
+								fetchPointBalance={fetchPointBalance}
+								availablePoints={availablePoints}
+							/>
+						}
+					/>
 					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 				</Routes>
 			</div>
