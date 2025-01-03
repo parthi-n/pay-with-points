@@ -14,6 +14,7 @@ function App() {
 	const [nikeSneakers, setNikeSneakers] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
 
+
 	useEffect(() => {
 		const fetchPointBalance = async () => {
 			try {
@@ -38,6 +39,7 @@ function App() {
 		fetchPointBalance();
 		fetchNikeSneakers();
 	}, []);
+
 
 	const handleAddToCart = (product) => {
 		const checkItem = cartItems.find((item) => item.id === product.id && item.size === product.size);
@@ -84,7 +86,6 @@ function App() {
 
 	const handleRemoveItem = (productId, productSize) => {
 		const productIndex = cartItems.findIndex((item) => item.id === productId && item.size === productSize);
-
 		const updatedCart = cartItems.filter((item) => item !== cartItems[productIndex]);
 		setCartItems([...updatedCart]);
 	};

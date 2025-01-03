@@ -4,19 +4,9 @@ import CheckoutForm from "../components/CheckoutForm";
 import CheckoutSummary from "../components/CheckoutSummary";
 import * as orderServices from "../services/orderServices";
 
-export default function Checkout({ cartItems,setCartItems, totalPricePts }) {
+export default function Checkout({ cartItems, setCartItems, totalPricePts }) {
 
 
-
-	useEffect(() => {
-		const fetchOrderList = async () => {
-			try {
-				const orderList = await orderServices.fetchOrderList();
-				console.log(orderList);
-			} catch (err) {}
-		};
-		fetchOrderList();
-	}, []);
 
 	return (
 		<div class="font-sans  mx-auto bg-white py-4">

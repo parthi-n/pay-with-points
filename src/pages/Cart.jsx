@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import CartItem from "../components/CartItem";
 import OrderSummary from "../components/OrderSummary";
 
-export default function cart({ cartItems, totalPricePts,  handleAddQuantity, handleRemoveQuantity, handleRemoveItem, availablePoints }) {
+export default function cart({ cartItems, totalPricePts, handleAddQuantity, handleRemoveQuantity, handleRemoveItem, availablePoints }) {
+	const [checkoutIsActive, setCheckoutIsActive] = useState(false);
 
+	const handleCheckout = () => setCheckoutIsActive(cartItems.length > 0);
+
+	useEffect(() => {
+		handleCheckout();
+
+		// const fetchOrderList = async () => {
+		// 	try {
+		// 		const orderList = await orderServices.fetchOrderList();
+		// 		console.log(orderList);
+		// 	} catch (err) {}
+		// };
+		// fetchOrderList();
+	}, [cartItems]);
 
 	return (
 		<div class="font-sans  mx-auto bg-white py-4">
@@ -27,8 +41,7 @@ export default function cart({ cartItems, totalPricePts,  handleAddQuantity, han
 					)}
 					<hr class="border-gray-300" />
 				</div>
-
-				<OrderSummary availablePoints={availablePoints} totalPricePts={totalPricePts} />
+				{checkoutIsActive && <OrderSummary availablePoints={availablePoints} totalPricePts={totalPricePts} />}
 			</div>
 		</div>
 	);
