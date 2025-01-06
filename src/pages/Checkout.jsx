@@ -11,8 +11,8 @@ export default function Checkout({ cartItems, setCartItems, totalPricePts, fetch
 	}, []);
 
 	return (
-		<div class="font-sans  mx-auto bg-white py-4">
-			<div class="grid md:grid-cols-5 gap-8 mt-8">
+		<div className="font-sans  mx-auto bg-white py-4">
+			<div className="grid md:grid-cols-5 gap-8 mt-8">
 				<div className="col-span-3">
 					<CheckoutForm
 						cartItems={cartItems}

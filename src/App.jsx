@@ -14,27 +14,28 @@ function App() {
 	const [nikeSneakers, setNikeSneakers] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
 
-	const fetchPointBalance = async () => {
-		try {
-			const citiPointBalance = await citiServices.citiPointBalance();
-			//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
-			setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	const fetchNikeSneakers = async () => {
-		try {
-			const nikeSneakerData = await sneakersServices.nikeList(1);
-			console.log(nikeSneakerData);
-			setNikeSneakers(nikeSneakerData.data);
-		} catch (err) {
-			console.log(error);
-		}
-	};
 
 	useEffect(() => {
+		const fetchPointBalance = async () => {
+			try {
+				const citiPointBalance = await citiServices.citiPointBalance();
+				//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
+				setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+	
+		const fetchNikeSneakers = async () => {
+			try {
+				const nikeSneakerData = await sneakersServices.nikeList(1);
+				console.log(nikeSneakerData);
+				setNikeSneakers(nikeSneakerData.data);
+			} catch (err) {
+				console.log(error);
+			}
+		};
+	
 		fetchPointBalance();
 		fetchNikeSneakers();
 	}, []);
@@ -118,7 +119,7 @@ function App() {
 								cartItems={cartItems}
 								setCartItems={setCartItems}
 								totalPricePts={totalPricePts}
-								fetchPointBalance={fetchPointBalance}
+								//fetchPointBalance={fetchPointBalance}
 								availablePoints={availablePoints}
 							/>
 						}

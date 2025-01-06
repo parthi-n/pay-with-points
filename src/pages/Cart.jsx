@@ -21,11 +21,11 @@ export default function cart({ cartItems, totalPricePts, handleAddQuantity, hand
 	}, [cartItems]);
 
 	return (
-		<div class="font-sans  mx-auto bg-white py-4">
-			<h1 class="text-3xl font-bold text-gray-800 ">Shopping Cart</h1>
+		<div className="font-sans  mx-auto bg-white py-4">
+			<h1 className="text-3xl font-bold text-gray-800 ">Shopping Cart</h1>
 
-			<div class="grid md:grid-cols-3 gap-8 mt-16">
-				<div class="md:col-span-2 space-y-4">
+			<div className="grid md:grid-cols-3 gap-8 mt-16">
+				<div className="md:col-span-2 space-y-4">
 					{cartItems.length > 0 ? (
 						cartItems.map((item) => (
 							<CartItem
@@ -39,7 +39,7 @@ export default function cart({ cartItems, totalPricePts, handleAddQuantity, hand
 					) : (
 						<p>There are no items in your cart.</p>
 					)}
-					<hr class="border-gray-300" />
+					<hr className="border-gray-300" />
 				</div>
 				{checkoutIsActive && <OrderSummary availablePoints={availablePoints} totalPricePts={totalPricePts} />}
 			</div>

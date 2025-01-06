@@ -16,7 +16,7 @@ export default function Navbar({ availablePoints, totalItems }) {
 					<div className="relative">
 						<Link to="/cart">Cart</Link>
 						{totalItems > 0 && (
-							<span class="bg-blue-500 text-[10px] px-1.5 font-semibold min-w-[16px] h-4 flex items-center justify-center text-white rounded-full absolute -top-1 left-[110%]">
+							<span className="bg-blue-500 text-[10px] px-1.5 font-semibold min-w-[16px] h-4 flex items-center justify-center text-white rounded-full absolute -top-1 left-[110%]">
 								{totalItems}
 							</span>
 						)}

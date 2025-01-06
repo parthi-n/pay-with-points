@@ -56,9 +56,9 @@ export default function CheckoutForm({
 		<div className="bg-gray-100 rounded-2xl px-10 py-10 h-max">
 			{!orderComplete ? (
 				<form onSubmit={handleSubmitForm}>
-					<h1 class="text-3xl font-bold text-gray-800 ">Checkout</h1>
+					<h1 className="text-3xl font-bold text-gray-800 ">Checkout</h1>
 					<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-6">
-						<h3 class="col-span-full text-lg font-bold">Enter your name and address:</h3>
+						<h3 className="col-span-full text-lg font-bold">Enter your name and address:</h3>
 						<div className="sm:col-span-3 sm:col-start-1">
 							<label htmlFor="firstName" className="block text-sm/6 font-medium text-gray-900">
 								First Name
@@ -160,7 +160,7 @@ export default function CheckoutForm({
 						</div>
 						<button
 							type="submit"
-							class="text-sm mt-6 px-4 py-3 w-80 font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-full"
+							className="text-sm mt-6 px-4 py-3 w-80 font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-full"
 						>
 							Pay with Points
 						</button>
@@ -168,7 +168,7 @@ export default function CheckoutForm({
 				</form>
 			) : (
 				<div className=" grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-6">
-					<h1 class="text-3xl font-bold text-gray-800 mb-5 col-span-full">Thanks for shopping</h1>
+					<h1 className="text-3xl font-bold text-gray-800 mb-5 col-span-full">Thanks for shopping</h1>
 
 					<p className="text-lg col-span-full">We have received your order and are getting ready it to be shipped.</p>
 
