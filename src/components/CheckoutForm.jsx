@@ -11,6 +11,7 @@ export default function CheckoutForm({
 	orderComplete,
 	setOrderComplete,
 }) {
+	
 	const initialState = {
 		firstName: "",
 		lastName: "",

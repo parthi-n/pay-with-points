@@ -51,7 +51,7 @@ const convertToPoints = (price) => {
 	return price * conversionRate;
 };
 
-const shopWithPoints = async () => {
+const shopWithPoints = async (transactionsID, transactionAmount, transactionPoints) => {
 	try {
 		const res = await fetch(CITI_POINTS_REDEEM_URL, {
 			method: "POST",
@@ -63,10 +63,21 @@ const shopWithPoints = async () => {
 				"Accept-Language": "application/json",
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(transactionDetails),
+			body: JSON.stringify({
+				cardId: CITI_CARD_ID,
+				transactions: [
+					{
+						transactionReferenceId: transactionsID,
+						transactionAmount: transactionAmount,
+						currencyCode: "SGD",
+						pointsToRedeem: transactionPoints,
+						transactionDescription: "Nike Sneakers",
+					},
+				],
+			}),
 		});
 		return res.json();
 	} catch (error) {}
 };
 
-export { citiPointBalance, convertToPoints };
+export { citiPointBalance, convertToPoints, shopWithPoints };

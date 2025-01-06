@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import CheckoutForm from "../components/CheckoutForm";
 import CheckoutSummary from "../components/CheckoutSummary";
-import * as orderServices from "../services/orderServices";
+
 
 export default function Checkout({ cartItems, setCartItems, totalPricePts, fetchPointBalance, availablePoints }) {
 	const [orderComplete, setOrderComplete] = useState(false);

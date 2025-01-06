@@ -8,34 +8,34 @@ import ProductList from "./pages/ProductList";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 
 function App() {
 	const [availablePoints, setAvailablePoints] = useState(0);
 	const [nikeSneakers, setNikeSneakers] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
 
+	const fetchPointBalance = async () => {
+		try {
+			const citiPointBalance = await citiServices.citiPointBalance();
+			//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
+			setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const fetchNikeSneakers = async () => {
+		try {
+			const nikeSneakerData = await sneakersServices.nikeList(1);
+			//console.log(nikeSneakerData);
+			setNikeSneakers(nikeSneakerData.data);
+		} catch (err) {
+			console.log(error);
+		}
+	};
 
 	useEffect(() => {
-		const fetchPointBalance = async () => {
-			try {
-				const citiPointBalance = await citiServices.citiPointBalance();
-				//console.log(citiPointBalance.rewardAccounts[0].availablePointBalance);
-				setAvailablePoints(citiPointBalance.rewardAccounts[0].availablePointBalance);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-	
-		const fetchNikeSneakers = async () => {
-			try {
-				const nikeSneakerData = await sneakersServices.nikeList(1);
-				console.log(nikeSneakerData);
-				setNikeSneakers(nikeSneakerData.data);
-			} catch (err) {
-				console.log(error);
-			}
-		};
-	
 		fetchPointBalance();
 		fetchNikeSneakers();
 	}, []);
@@ -119,11 +119,12 @@ function App() {
 								cartItems={cartItems}
 								setCartItems={setCartItems}
 								totalPricePts={totalPricePts}
-								//fetchPointBalance={fetchPointBalance}
+								fetchPointBalance={fetchPointBalance}
 								availablePoints={availablePoints}
 							/>
 						}
 					/>
+					<Route path="/orders" element={<Orders />} />
 					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 				</Routes>
 			</div>

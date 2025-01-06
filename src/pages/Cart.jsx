@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import CartItem from "../components/CartItem";
 import OrderSummary from "../components/OrderSummary";
 
@@ -10,14 +9,6 @@ export default function cart({ cartItems, totalPricePts, handleAddQuantity, hand
 
 	useEffect(() => {
 		handleCheckout();
-
-		// const fetchOrderList = async () => {
-		// 	try {
-		// 		const orderList = await orderServices.fetchOrderList();
-		// 		console.log(orderList);
-		// 	} catch (err) {}
-		// };
-		// fetchOrderList();
 	}, [cartItems]);
 
 	return (
