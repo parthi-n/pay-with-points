@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import * as orderServices from "../services/orderServices";
+import * as citiServices from "../services/citiServices";
 
 export default function CheckoutForm({
 	totalPricePts,
@@ -11,7 +12,6 @@ export default function CheckoutForm({
 	orderComplete,
 	setOrderComplete,
 }) {
-	
 	const initialState = {
 		firstName: "",
 		lastName: "",
@@ -21,7 +21,10 @@ export default function CheckoutForm({
 		postalCode: "",
 		orderSummary: JSON.stringify(cartItems),
 		totalPoints: totalPricePts,
+		totalAmount: "",
 		status: "Processing Payment",
+		transactionId: "",
+		orderId: "",
 	};
 
 	const [orderData, setOrderData] = useState(initialState);
@@ -39,14 +42,49 @@ export default function CheckoutForm({
 				throw new Error(newOrder.error);
 			}
 			setOrderData(initialState);
-		} catch (err) {
-			console.error("Error creating order:", err);
+			console.log(newOrder);
+		} catch (error) {
+			console.error("Error creating order:", error);
+		}
+	};
+
+	const generateTransactionId = () => {
+		const timestamp = Date.now();
+		const randomNum = Math.floor(Math.random() * 10000);
+		return `${timestamp}${randomNum}`;
+	};
+
+	const processPayment = async () => {
+		try {
+			// Step 1: Generate a transaction ID and convert points to cash amount
+			const transactionId = await generateTransactionId();
+			const totalAmount = await citiServices.convertToCash(totalPricePts);
+
+			// Step 2: Redeem points and get the response
+			const shopWithPointsResponse = await citiServices.redeemPoints(transactionId, totalAmount, totalPricePts);
+
+			// Step 3: Ensure the redemption response is valid
+			if (!shopWithPointsResponse || !shopWithPointsResponse.redemptionDetails?.[0]?.orderId) {
+				console.error("Failed to redeem points or retrieve redemption details.");
+				return; // Exit early if the response is not valid
+			}
+
+			// Step 4: Create order after successfully redeeming points
+			const { orderId } = shopWithPointsResponse.redemptionDetails[0]; // Destructure for clarity
+			createOrder({ ...orderData, orderId, transactionId });
+
+			// Step 5: Log the response and proceed
+			console.log("Shop with points response:", shopWithPointsResponse);
+		} catch (error) {
+			// Step 6: Log the error and rethrow
+			console.error("processPayment error:", error);
+			throw error;
 		}
 	};
 
 	const handleSubmitForm = (evt) => {
 		evt.preventDefault();
-		createOrder(orderData);
+		processPayment();
 		fetchPointBalance();
 		setCartItems([]);
 		setOrderData(initialState);

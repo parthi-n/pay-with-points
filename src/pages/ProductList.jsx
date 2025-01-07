@@ -5,7 +5,7 @@ import * as sneakersServices from "../services/sneakersServices";
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/Loader";
 
-export default function ProductList({ nikeSneakers, setNikeSneakers, handleAddToCart }) {
+export default function ProductList({ nikeSneakers, setNikeSneakers }) {
 	const [pageNum, setPageNum] = useState(2);
 
 	const fetchMoreData = () => {

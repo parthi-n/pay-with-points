@@ -30,14 +30,27 @@ function App() {
 			const nikeSneakerData = await sneakersServices.nikeList(1);
 			//console.log(nikeSneakerData);
 			setNikeSneakers(nikeSneakerData.data);
-		} catch (err) {
+		} catch (error) {
 			console.log(error);
 		}
 	};
 
+	
 	useEffect(() => {
+
+		// const redeem = async () => {
+		// 	try {
+		// 		const nikeSneakerRedeem = await citiServices.redeemPoints("BIMI5180999", 252, 1000);
+		// 		console.log(nikeSneakerRedeem);
+		// 	} catch (error) {
+		// 		console.log(error);
+		// 	}
+		// };
+
+		
 		fetchPointBalance();
 		fetchNikeSneakers();
+		// redeem();
 	}, []);
 
 	const handleAddToCart = (product) => {
