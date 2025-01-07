@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import CheckoutForm from "../components/CheckoutForm";
 import CheckoutSummary from "../components/CheckoutSummary";
 
-
-export default function Checkout({ cartItems, setCartItems, totalPricePts, fetchPointBalance, availablePoints }) {
+export default function Checkout({ cartItems, setCartItems, totalPricePts, availablePoints, setAvailablePoints }) {
 	const [orderComplete, setOrderComplete] = useState(false);
 	useEffect(() => {
 		setOrderComplete(cartItems.length <= 0);
@@ -18,10 +17,9 @@ export default function Checkout({ cartItems, setCartItems, totalPricePts, fetch
 						cartItems={cartItems}
 						setCartItems={setCartItems}
 						totalPricePts={totalPricePts}
-						fetchPointBalance={fetchPointBalance}
-						availablePoints={availablePoints}
 						orderComplete={orderComplete}
 						setOrderComplete={setOrderComplete}
+						setAvailablePoints={setAvailablePoints}
 					/>
 				</div>
 				{!orderComplete && (

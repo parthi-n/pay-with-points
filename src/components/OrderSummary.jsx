@@ -25,11 +25,22 @@ export default function OrderSummary({ availablePoints, totalPricePts }) {
 			</ul>
 
 			<div className="mt-10 space-y-2 flex flex-col gap-1">
-				<Link to="/checkout">
-					<button type="button" className="text-sm px-4 py-3 w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-full">
-						Checkout
-					</button>
-				</Link>
+				{totalPricePts >= 1000 && (
+					<Link to="/checkout">
+						<button
+							type="button"
+							className="text-sm px-4 py-3 w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-full"
+						>
+							Checkout
+						</button>
+					</Link>
+				)}
+
+				{totalPricePts < 1000 && (
+					<p className="text-center mb-2 text-blue-500">
+						Checkout requires a minimum of <br /> <b>1000 points</b> to redeem
+					</p>
+				)}
 				<Link to="/">
 					<button
 						type="button"

@@ -3,7 +3,7 @@ const CITI_POINTS_REDEEM_URL = `${import.meta.env.VITE_CITI_POINTS_REDEEM_URL}`;
 const CITI_POINTBALANCE_ACCESS_TOKEN = `${import.meta.env.VITE_CITI_POINTBALANCE_ACCESS_TOKEN}`;
 const CITI_CLIENT_ID = `${import.meta.env.VITE_CITI_CLIENT_ID}`;
 const CITI_CARD_ID = `${import.meta.env.VITE_CITI_CARD_ID}`;
-const conversionRate = 25;
+const conversionRate = 0.2521;
 const options = {
 	Authorization: `Bearer ${CITI_POINTBALANCE_ACCESS_TOKEN}`,
 	client_id: CITI_CLIENT_ID,
@@ -73,11 +73,11 @@ const redeemPoints = async (transactionId, transactionAmount, transactionPoints)
 };
 
 const convertToPoints = (price) => {
-	return price * conversionRate;
+	return price / conversionRate;
 };
 
 const convertToCash = (points) => {
-	return points / conversionRate;
+	return points * conversionRate;
 };
 
 export { citiPointBalance, redeemPoints, convertToPoints, convertToCash };

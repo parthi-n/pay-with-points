@@ -2,15 +2,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 import * as orderServices from "../services/orderServices";
 import * as citiServices from "../services/citiServices";
+import { Link } from "react-router-dom";
 
 export default function CheckoutForm({
 	totalPricePts,
 	cartItems,
 	setCartItems,
-	fetchPointBalance,
-	availablePoints,
 	orderComplete,
 	setOrderComplete,
+	setAvailablePoints,
 }) {
 	const initialState = {
 		firstName: "",
@@ -38,9 +38,6 @@ export default function CheckoutForm({
 			const newOrder = await orderServices.createOrder(Data);
 			console.log("newOrder:", newOrder);
 
-			if (newOrder.error) {
-				throw new Error(newOrder.error);
-			}
 			setOrderData(initialState);
 			console.log(newOrder);
 		} catch (error) {
@@ -56,27 +53,21 @@ export default function CheckoutForm({
 
 	const processPayment = async () => {
 		try {
-			// Step 1: Generate a transaction ID and convert points to cash amount
 			const transactionId = await generateTransactionId();
 			const totalAmount = await citiServices.convertToCash(totalPricePts);
-
-			// Step 2: Redeem points and get the response
 			const shopWithPointsResponse = await citiServices.redeemPoints(transactionId, totalAmount, totalPricePts);
 
-			// Step 3: Ensure the redemption response is valid
 			if (!shopWithPointsResponse || !shopWithPointsResponse.redemptionDetails?.[0]?.orderId) {
 				console.error("Failed to redeem points or retrieve redemption details.");
-				return; // Exit early if the response is not valid
+				return;
 			}
 
-			// Step 4: Create order after successfully redeeming points
-			const { orderId } = shopWithPointsResponse.redemptionDetails[0]; // Destructure for clarity
+			const { orderId } = shopWithPointsResponse.redemptionDetails[0];
 			createOrder({ ...orderData, orderId, transactionId });
 
-			// Step 5: Log the response and proceed
 			console.log("Shop with points response:", shopWithPointsResponse);
+			setAvailablePoints(shopWithPointsResponse.availablePointBalance);
 		} catch (error) {
-			// Step 6: Log the error and rethrow
 			console.error("processPayment error:", error);
 			throw error;
 		}
@@ -85,7 +76,6 @@ export default function CheckoutForm({
 	const handleSubmitForm = (evt) => {
 		evt.preventDefault();
 		processPayment();
-		fetchPointBalance();
 		setCartItems([]);
 		setOrderData(initialState);
 		setOrderComplete(true);
@@ -106,6 +96,7 @@ export default function CheckoutForm({
 								<input
 									onChange={handleChange}
 									value={orderData.firstName}
+									required
 									id="firstName"
 									name="firstName"
 									type="text"
@@ -122,6 +113,7 @@ export default function CheckoutForm({
 								<input
 									onChange={handleChange}
 									value={orderData.lastName}
+									required
 									id="lastName"
 									name="lastName"
 									type="text"
@@ -139,6 +131,7 @@ export default function CheckoutForm({
 								<input
 									onChange={handleChange}
 									value={orderData.addressLine1}
+									required
 									id="addressLine1"
 									name="addressLine1"
 									type="text"
@@ -155,6 +148,7 @@ export default function CheckoutForm({
 								<input
 									onChange={handleChange}
 									value={orderData.addressLine2}
+									required
 									id="addressLine2"
 									name="addressLine2"
 									type="text"
@@ -172,6 +166,7 @@ export default function CheckoutForm({
 								<input
 									onChange={handleChange}
 									value={orderData.city}
+									required
 									id="city"
 									name="city"
 									type="text"
@@ -189,6 +184,7 @@ export default function CheckoutForm({
 								<input
 									onChange={handleChange}
 									value={orderData.postalCode}
+									required
 									id="postalCode"
 									name="postalCode"
 									type="text"
@@ -197,8 +193,10 @@ export default function CheckoutForm({
 								/>
 							</div>
 						</div>
+
 						<button
 							type="submit"
+							
 							className="text-sm mt-6 px-4 py-3 w-80 font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-full"
 						>
 							Pay with Points
@@ -212,15 +210,14 @@ export default function CheckoutForm({
 					<p className="text-lg col-span-full">We have received your order and are getting ready it to be shipped.</p>
 
 					<div className="mt-4 text-sm sm:col-span-3">
-						<p className="mb-8">
-							Balance Points: <span className="font-bold">{availablePoints}</span>
-						</p>
-						<button
-							type="button"
-							className="w-full px-4 py-3 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded-full"
-						>
-							View Orders
-						</button>
+						<Link to="/orders">
+							<button
+								type="button"
+								className="w-full px-4 py-3 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded-full"
+							>
+								View Orders
+							</button>
+						</Link>
 					</div>
 				</div>
 			)}

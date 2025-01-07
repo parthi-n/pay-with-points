@@ -35,9 +35,7 @@ function App() {
 		}
 	};
 
-	
 	useEffect(() => {
-
 		// const redeem = async () => {
 		// 	try {
 		// 		const nikeSneakerRedeem = await citiServices.redeemPoints("BIMI5180999", 252, 1000);
@@ -47,7 +45,6 @@ function App() {
 		// 	}
 		// };
 
-		
 		fetchPointBalance();
 		fetchNikeSneakers();
 		// redeem();
@@ -132,8 +129,8 @@ function App() {
 								cartItems={cartItems}
 								setCartItems={setCartItems}
 								totalPricePts={totalPricePts}
-								fetchPointBalance={fetchPointBalance}
 								availablePoints={availablePoints}
+								setAvailablePoints={setAvailablePoints}
 							/>
 						}
 					/>
