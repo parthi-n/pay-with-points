@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom";
 import * as sneakersServices from "../services/sneakersServices";
 import * as citiServices from "../services/citiServices";
 import Loader from "../components/Loader";
+import RelatedProducts from "../components/RelatedProducts";
 
 export default function ProductDetails({ handleAddToCart }) {
 	const { sneakerSlug } = useParams();
-	const params = useParams();
 
 	const [sneakerDetails, setSneakerDetails] = useState([]);
 	const [selectedItem, setSelectedItem] = useState({});
+	const [relatedItems, setRelatedItems] = useState([]);
 
 	const shoeSize = ["5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12"];
 
@@ -19,6 +20,8 @@ export default function ProductDetails({ handleAddToCart }) {
 				const nikeSneakerData = await sneakersServices.sneakerDetails(sneakerSlug);
 
 				setSneakerDetails(nikeSneakerData.data);
+				setRelatedItems(nikeSneakerData.data.variants);
+				console.log(nikeSneakerData.data);
 				setSelectedItem({
 					id: nikeSneakerData.data.id,
 					title: nikeSneakerData.data.title,
@@ -28,8 +31,7 @@ export default function ProductDetails({ handleAddToCart }) {
 					size: null,
 					slug: nikeSneakerData.data.slug,
 				});
-				
-			} catch (err) {
+			} catch (error) {
 				console.log(error);
 			}
 		};
@@ -45,15 +47,13 @@ export default function ProductDetails({ handleAddToCart }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		
 		handleAddToCart(selectedItem);
 	};
 
 	return (
 		<div>
 			{sneakerDetails.id ? (
-			
-				<div className="font-sans">
+				<div>
 					<div className="grid items-start grid-cols-1 lg:grid-cols-5">
 						<div className="lg:col-span-3  lg:sticky top-0 gap-0.5">
 							<div className="overflow-hidden border border-gray-200 rounded-md">
@@ -127,6 +127,8 @@ export default function ProductDetails({ handleAddToCart }) {
 							</div>
 						</div>
 					</div>
+
+					<RelatedProducts relatedItems={relatedItems} />
 				</div>
 			) : (
 				<Loader />
