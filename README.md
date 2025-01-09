@@ -6,7 +6,6 @@
 
 The Citi Reward Points Shopping Integration project allows users to leverage the reward points accumulated on their Citi credit card to pay for purchases on partner websites. This innovative solution provides a seamless and convenient shopping experience, where customers can directly use their points as a payment method without the need for additional conversions or complex processes. In this project, Nike online shopping platform is use as a Citi's partner platform to demonstrate Citi Reward Points Shopping Integration.  
 
-The goal of this project is to create a [web app, tool, platform, etc.] that [describe the main functionality and features]. The app is designed to be [responsive, user-friendly, fast, etc.] and is optimized for performance and scalability.
 
 
 #### Key Features:
