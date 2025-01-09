@@ -25,13 +25,10 @@ export default function Orders() {
 	useEffect(() => {
 		const checkData = async () => {
 			try {
-				console.log("true");
 				if (orderedList.length > 0) {
 					setDataRetrieved(true);
-					console.log("true");
 				} else {
 					setDataRetrieved(false);
-					console.log("false");
 				}
 			} catch (error) {
 				console.log(error);
@@ -40,7 +37,7 @@ export default function Orders() {
 		checkData();
 	}, [orderedList]);
 
-	//console.log(orderedList);
+
 
 	return (
 		<div className="font-sans  mx-auto bg-white py-4">
