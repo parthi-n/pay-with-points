@@ -29,7 +29,7 @@ The application is designed to meet the following user needs:
 -   **As a user**, I want to be able to see my balance points.
 -   **As a user**, I want to be able to use my points to pay for products.
 -   **As a user**, I want the app to be track my orders.
--   **As a user**, I want to cancel my order and get points refunded. (Future enhancement)
+-   **As a user**, I want to cancel my order and get points refunded. 
 
 
 ## Technologies Used

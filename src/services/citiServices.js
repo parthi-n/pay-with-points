@@ -50,7 +50,7 @@ const redeemPoints = async (transactionId, transactionAmount, transactionPoints)
 		],
 	};
 
-	console.log(JSON.stringify(transactionDetails));
+	//console.log(JSON.stringify(transactionDetails));
 
 	try {
 		const res = await fetch(CITI_POINTS_REDEEM_URL, {
@@ -63,12 +63,41 @@ const redeemPoints = async (transactionId, transactionAmount, transactionPoints)
 			throw new Error(`Error: ${res.statusText}`);
 		}
 
+		if (res.ok) {
+			console.log("redeemPoints res OK");
+		}
+
 		const data = await res.json();
 		console.log(data);
 		return data;
 	} catch (error) {
-		console.error("redeemPoints error", error);
-		return null;
+		console.error("Redeem Points error", error);
+	}
+};
+
+const redemptionReversal = async (transactionId, orderId) => {
+	const transactionDetails = {
+		cardId: CITI_CARD_ID,
+		orderId: Number(orderId),
+		transactionReferenceNumber: transactionId,
+	};
+
+	try {
+		const res = await fetch(`${CITI_POINTS_REDEEM_URL}/reversals`, {
+			method: "POST",
+			headers: options,
+			body: JSON.stringify(transactionDetails),
+		});
+
+		if (!res.ok) {
+			throw new Error(`Error: ${res.statusText}`);
+		}
+
+		if (res.ok) {
+			//console.log("redemptionReversal res OK");
+		}
+	} catch (error) {
+		console.error("Redemption Reversal error", error);
 	}
 };
 
@@ -80,4 +109,4 @@ const convertToCash = (points) => {
 	return points * conversionRate;
 };
 
-export { citiPointBalance, redeemPoints, convertToPoints, convertToCash };
+export { citiPointBalance, redeemPoints, redemptionReversal, convertToPoints, convertToCash };

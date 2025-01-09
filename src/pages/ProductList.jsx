@@ -12,9 +12,7 @@ export default function ProductList({ nikeSneakers, setNikeSneakers }) {
 		const fetchMoreSneakers = async () => {
 			try {
 				const nikeSneakerData = await sneakersServices.nikeList(pageNum);
-				console.log(nikeSneakerData);
 				setNikeSneakers([...nikeSneakers, ...nikeSneakerData.data]);
-				console.log([...nikeSneakers, ...nikeSneakerData.data]);
 			} catch (err) {
 				console.log(error);
 			}
@@ -28,8 +26,8 @@ export default function ProductList({ nikeSneakers, setNikeSneakers }) {
 		<div className="bg-white relative">
 			<InfiniteScroll dataLength={nikeSneakers.length} next={fetchMoreData} hasMore={true} loader={<Loader />}>
 				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10">
-					{nikeSneakers.map((sneaker) => (
-						<ProductCard key={sneaker.id} sneaker={sneaker} />
+					{nikeSneakers.map((sneaker, index) => (
+						<ProductCard key={sneaker.id + index} sneaker={sneaker} />
 					))}
 				</div>
 			</InfiniteScroll>

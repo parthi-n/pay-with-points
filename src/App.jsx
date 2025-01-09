@@ -36,18 +36,8 @@ function App() {
 	};
 
 	useEffect(() => {
-		// const redeem = async () => {
-		// 	try {
-		// 		const nikeSneakerRedeem = await citiServices.redeemPoints("BIMI5180999", 252, 1000);
-		// 		console.log(nikeSneakerRedeem);
-		// 	} catch (error) {
-		// 		console.log(error);
-		// 	}
-		// };
-
 		fetchPointBalance();
 		fetchNikeSneakers();
-		// redeem();
 	}, []);
 
 	const handleAddToCart = (product) => {
@@ -134,7 +124,7 @@ function App() {
 							/>
 						}
 					/>
-					<Route path="/orders" element={<Orders />} />
+					<Route path="/orders" element={<Orders fetchPointBalance={fetchPointBalance} />} />
 					<Route path="*" element={<h2>Whoops, nothing here!</h2>} />
 				</Routes>
 			</div>

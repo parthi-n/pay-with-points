@@ -36,10 +36,30 @@ const createOrder = async (formData) => {
 		if (!res.ok) {
 			throw new Error(`Error creating order: ${res.statusText}`);
 		}
-	} catch (err) {
-		console.error("Error in createOrder:", err);
-		throw err;
+	} catch (error) {
+		console.error("Error in createOrder:", error);
+		throw error;
 	}
 };
 
-export { fetchOrderList, createOrder };
+const removeOrder = async (recordId) => {
+	try {
+		const res = await fetch(`${ORDERLIST_URL}/${recordId}`, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${ORDERLIST_ACCESS_TOKEN}`,
+				"Content-Type": "application/json",
+			},
+		});
+		if (res.ok) {
+			console.log(`Record ${recordId} deleted successfully!`);
+		} else {
+			throw new Error("Failed to delete record.");
+		}
+	} catch (error) {
+		console.error("Error in removeOrder:", error);
+		throw error;
+	}
+};
+
+export { fetchOrderList, createOrder, removeOrder };

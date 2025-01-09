@@ -5,7 +5,7 @@ export default function OrderedItemList({ items }) {
 	const itemList = JSON.parse(items);
 	//console.log(itemList);
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 mt-10">
 			{itemList.map((item, index) => (
 				<div key={index} className="grid grid-cols-3 items-start gap-4">
 					<div className="col-span-2 flex items-start gap-4">
@@ -28,6 +28,8 @@ export default function OrderedItemList({ items }) {
 							<span className="text-sm font-bold"> pts</span>
 						</h4>
 					</div>
+
+					
 				</div>
 			))}
 		</div>
