@@ -32,6 +32,14 @@ The application is designed to meet the following user needs:
 -   **As a user**, I want to cancel my order and get points refunded. 
 
 
+## Screenshots / Demo (optional)
+
+![Products Page](src/assets/products.png)
+![Cart Page](src/assets/cart.png)
+![Checkout Page](src/assets/checkout.png)
+![Orders Page](src/assets/orders.png)
+
+
 ## Technologies Used
 
 This project is built with the following technologies:
