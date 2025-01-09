@@ -32,11 +32,16 @@ The application is designed to meet the following user needs:
 -   **As a user**, I want to cancel my order and get points refunded. 
 
 
-## Screenshots / Demo (optional)
-
+## Screenshots 
+#### All Products page
+![Products Page](src/assets/home.png)
+#### Product details page
 ![Products Page](src/assets/products.png)
+#### Cart page
 ![Cart Page](src/assets/cart.png)
+#### Checkout page
 ![Checkout Page](src/assets/checkout.png)
+#### Orders page
 ![Orders Page](src/assets/orders.png)
 
 
