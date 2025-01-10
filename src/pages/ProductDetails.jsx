@@ -7,48 +7,42 @@ import RelatedProducts from "../components/RelatedProducts";
 
 export default function ProductDetails({ handleAddToCart }) {
 	const { sneakerSlug } = useParams();
-
 	const [sneakerDetails, setSneakerDetails] = useState([]);
 	const [selectedItem, setSelectedItem] = useState({});
 	const [relatedItems, setRelatedItems] = useState([]);
 
 	const shoeSize = ["5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12"];
 
-	useEffect(() => {
-		const fetchSneakerDetails = async () => {
-			try {
-				const nikeSneakerData = await sneakersServices.sneakerDetails(sneakerSlug);
+	const fetchSneakerDetails = async () => {
+		try {
+			const nikeSneakerData = await sneakersServices.sneakerDetails(sneakerSlug);
 
-				setSneakerDetails(nikeSneakerData.data);
-				//setRelatedItems(nikeSneakerData.data.variants);
-				setSelectedItem({
-					id: nikeSneakerData.data.id,
-					title: nikeSneakerData.data.title,
-					image: nikeSneakerData.data.image,
-					price: nikeSneakerData.data.min_price.toFixed(2),
-					sneakerPoints: Math.round(citiServices.convertToPoints(nikeSneakerData.data.min_price)),
-					size: null,
-					slug: nikeSneakerData.data.slug,
-				});
-			} catch (error) {
-				console.log("fetchSneakerDetails", error);
-			}
-		};
+			setSneakerDetails(nikeSneakerData.data);
+			//setRelatedItems(nikeSneakerData.data.variants);
+			setSelectedItem({
+				id: nikeSneakerData.data.id,
+				title: nikeSneakerData.data.title,
+				image: nikeSneakerData.data.image,
+				price: nikeSneakerData.data.min_price.toFixed(2),
+				sneakerPoints: Math.round(citiServices.convertToPoints(nikeSneakerData.data.min_price)),
+				size: null,
+				slug: nikeSneakerData.data.slug,
+			});
+		} catch (error) {
+			console.log("fetchSneakerDetails", error);
+		}
+	};
 
-		const fetchTrendingSneakers = async () => {
-			try {
-				const trendingSneakersData = await sneakersServices.trendingNikeList();
-				//	console.log(trendingSneakersData.data);
-				//	console.log(getRandomObjects(trendingSneakersData.data));
-				setRelatedItems(getRandomObjects(trendingSneakersData.data));
-			} catch (error) {
-				console.log("fetchTrendingSneakers", error);
-			}
-		};
-
-		fetchSneakerDetails();
-		fetchTrendingSneakers();
-	}, [sneakerSlug]);
+	const fetchTrendingSneakers = async () => {
+		try {
+			const trendingSneakersData = await sneakersServices.trendingNikeList();
+			//	console.log(trendingSneakersData.data);
+			//	console.log(getRandomObjects(trendingSneakersData.data));
+			setRelatedItems(getRandomObjects(trendingSneakersData.data));
+		} catch (error) {
+			console.log("fetchTrendingSneakers", error);
+		}
+	};
 
 	const getRandomObjects = (arr) => {
 		const shuffledArray = [...arr].sort(() => Math.random() - 0.5);
@@ -65,6 +59,11 @@ export default function ProductDetails({ handleAddToCart }) {
 		e.preventDefault();
 		handleAddToCart(selectedItem);
 	};
+
+	useEffect(() => {
+		fetchSneakerDetails();
+		fetchTrendingSneakers();
+	}, [sneakerSlug]);
 
 	return (
 		<div>

@@ -15,7 +15,7 @@ export default function Orders({ fetchPointBalance }) {
 			const orderListData = await orderServices.fetchOrderList();
 			setOrderedList(orderListData.records);
 			setDataRetrieved(true);
-			console.log(orderListData.records);
+			//console.log(orderListData.records);
 		} catch (err) {
 			console.log(err);
 		}
