@@ -1,11 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import * as citiServices from "../services/citiServices";
 
 export default function ProductCard({ sneaker }) {
 	const { title, image, slug, avg_price, gender, min_price } = sneaker;
 
 	const sneakerPoints = Math.round(citiServices.convertToPoints(min_price));
+
+	const handleClick = () => {
+		useNavigate();
+	};
 
 	return (
 		<div key={sneaker.id}>
@@ -18,7 +23,7 @@ export default function ProductCard({ sneaker }) {
 				<div className="mt-4 flex justify-between">
 					<div className="">
 						<h3 className="text-sm  text-black font-medium">
-							<Link to={`/sneakers/${slug}`}>
+							<Link to={`/sneakers/${slug}`} onClick={handleClick}>
 								<span aria-hidden="true" className="absolute inset-0" />
 								{title}
 							</Link>
@@ -30,22 +35,6 @@ export default function ProductCard({ sneaker }) {
 					</div>
 				</div>
 			</div>
-			{/* <button
-				type="button"
-				onClick={() =>
-					handleAddToCart({
-						id: sneaker.id,
-						title: sneaker.title,
-						image: sneaker.image,
-						price: sneaker.avg_price.toFixed(2),
-						size: 0,
-						slug: sneaker.slug,
-					})
-				}
-				className="inline-flex w-full mt-2 justify-center rounded-md bg-black px-3 py-1 text-sm font-medium text-white shadow-sm hover:bg-black/70  sm:w-auto"
-			>
-				Add to cart
-			</button> */}
 		</div>
 	);
 }

@@ -20,8 +20,7 @@ export default function ProductDetails({ handleAddToCart }) {
 				const nikeSneakerData = await sneakersServices.sneakerDetails(sneakerSlug);
 
 				setSneakerDetails(nikeSneakerData.data);
-				setRelatedItems(nikeSneakerData.data.variants);
-				console.log(nikeSneakerData.data);
+				//setRelatedItems(nikeSneakerData.data.variants);
 				setSelectedItem({
 					id: nikeSneakerData.data.id,
 					title: nikeSneakerData.data.title,
@@ -32,12 +31,29 @@ export default function ProductDetails({ handleAddToCart }) {
 					slug: nikeSneakerData.data.slug,
 				});
 			} catch (error) {
-				console.log(error);
+				console.log("fetchSneakerDetails", error);
+			}
+		};
+
+		const fetchTrendingSneakers = async () => {
+			try {
+				const trendingSneakersData = await sneakersServices.trendingNikeList();
+				//	console.log(trendingSneakersData.data);
+				//	console.log(getRandomObjects(trendingSneakersData.data));
+				setRelatedItems(getRandomObjects(trendingSneakersData.data));
+			} catch (error) {
+				console.log("fetchTrendingSneakers", error);
 			}
 		};
 
 		fetchSneakerDetails();
+		fetchTrendingSneakers();
 	}, []);
+
+	const getRandomObjects = (arr) => {
+		const shuffledArray = [...arr].sort(() => Math.random() - 0.5);
+		return shuffledArray.slice(0, 4);
+	};
 
 	const sneakerPoints = Math.round(citiServices.convertToPoints(sneakerDetails.min_price));
 
