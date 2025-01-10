@@ -48,7 +48,7 @@ export default function ProductDetails({ handleAddToCart }) {
 
 		fetchSneakerDetails();
 		fetchTrendingSneakers();
-	}, []);
+	}, [sneakerSlug]);
 
 	const getRandomObjects = (arr) => {
 		const shuffledArray = [...arr].sort(() => Math.random() - 0.5);
