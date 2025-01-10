@@ -1,5 +1,7 @@
 # Pay with Reward Points!
 
+<br />
+
 ## Project Description
 
 ### Overview
